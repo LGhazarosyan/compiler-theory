@@ -5,8 +5,9 @@ Definitions =  Type Ident '=' Constant '\n'| Type '['Integer']' Ident = '{' Cons
 
 
 CodeSegment = 'CODE SEGMENT: \n' SubProgram {SubProgram} SegmentTerminator
-SubProgram = Ident ':\nBEGIN' {Statement} 'END\n'
-Statement = (FunctionCall | PushCommand | PopCommand | BuildinCommand) '\n'
+SubProgram = Label '\nBEGIN' {Statement} 'END\n'
+Statement = (FunctionCall | PushCommand | PopCommand | BuildinCommand | Label) '\n'
+Label = Ident ':'
 FunctionCall = 'CALL' Ident
 PushCommand = ('PUSH' | 'PUSHW' | 'PUSHD') Expr {Expr}
 PopCommand = 'POP' | 'POPW' | 'POPD'
@@ -19,6 +20,7 @@ BuildinCommand = 'ADD' | 'ADDW'| 'ADDD' | 'SUB' | 'SUBW' | 'SUBD' |  'MUL' | 'MU
 		| 'INPUT' | 'INPUTW' | 'INPUTD' 
 		| 'PRINT' | 'PRINTW' | 'PRINTD'
 		| '[]' Integer | '[]w' Integer | '[]d' Integer
+		| CP | CPW | CPD
 
 Expr = Ident | Constant | Register
 Constant = Char | Integer
@@ -26,13 +28,8 @@ SegmentTerminator = 'END SEGMENT\n'
 Type = 'BYTE' | 'WORD' | 'DWORD'
 
 
-
-
-
-
-
 # Regex expressions for terminal symbols
 Char = .*
-Integer = [1-9][0-9]*
+Integer = -?[1-9][0-9]*
 WordCharacter = [a-zA-Z_-]
 Ident = WordCharacter{(WordCharacter|'[0-9]')*}
