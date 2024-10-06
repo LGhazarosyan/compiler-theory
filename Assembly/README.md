@@ -23,4 +23,12 @@ Main Operations in assembly language use Stack. They use top elements from the s
 - INPUT|INPUTW|INPUTD - takes input and pushes it to stack
 - PRINT|PRINTW|PRINTD - pops the top stack element and prints it
 - CP|CPW|CPD - copies the top element of stack and pushes to stack
-- []|[]w|[]d integer - subscript operator. Uses top element as address to get the array element
+- []|[]w|[]d integer - subscript operator. Uses top element as address to get the array element and pushes to stack
+- |INC|INCW|INCD - pop and push incremented value(by one)
+- |DEC|DECW|DECD - pop and push decremented value(by one)
+
+
+# Function Calls
+
+
+# Data Segment
