@@ -1,30 +1,28 @@
 Program = [DataSegment] CodeSegment {CodeSegment}
 
 DataSegment = 'DATA SEGMENT: \n' {Definitions} SegmentTerminator
-Definitions =  Type Ident '=' Constant '\n'| Type '['Integer']' Ident = '{' Constant {, Constant} '}' '\n'
-
+Definitions =  Type Ident '=' Constant '\n'
 
 CodeSegment = 'CODE SEGMENT: \n' SubProgram {SubProgram} SegmentTerminator
 SubProgram = Label '\nBEGIN' {Statement} 'END\n'
-Statement = (FunctionCall | PushCommand | PopCommand | BuildinCommand | Label) '\n'
+Statement = (FunctionCall | PushCommand | PopCommand | BuildinCommand | RetExpr | Label) '\n'
 Label = Ident ':'
 FunctionCall = 'CALL' Ident
-PushCommand = ('PUSH' | 'PUSHW' | 'PUSHD') Expr {Expr}
-PopCommand = 'POP' | 'POPW' | 'POPD'
-BuildinCommand = 'ADD' | 'ADDW'| 'ADDD' | 'SUB' | 'SUBW' | 'SUBD' |  'MUL' | 'MULW' | 'MULD' | 'DIV' | 'DIVW' | 'DIVD' 
-		| 'STOR' Ident | 'STORW' Ident | 'STORD' Ident |
-		| 'JMP' Ident | 'JMPZ' Ident | 'JMPG' Ident| 'JMPL' Ident | 'JMPGE' Ident | 'JMPLE' Ident | 'JMPNE' Ident |
-		| 'CMP' | 'CMPW' | 'CMPD'|
-		| 'SHIFTR' Integer | 'SHIFTL' Integer
-		| 'AND' | 'ANDW' | 'ANDD' | 'OR' | 'ORW' | 'ORD' | 'XOR' | 'XORW' | 'XORD' | 'NOT' | 'NOTW' | 'NOTD' 
-		| 'INPUT' | 'INPUTW' | 'INPUTD' 
-		| 'PRINT' | 'PRINTW' | 'PRINTD'
-		| '[]' Integer | '[]w' Integer | '[]d' Integer
-		| CP | CPW | CPD |
-		| INC | INCW | INCD
-		| DEC | DECW | DECD
+PushCommand = 'PUSH' Expr
+PopCommand = 'POP' | 'POP' IDENT
+RetExpr = 'RET' {Expr}
+BuildinCommand = 'ADD' | 'SUB' | 'MUL' | 'DIV'
+		| 'STOR'
+		| 'JMP' Ident | 'JMPZ' Ident
+		| 'CMP'
+		| 'AND' | 'OR' | 'XOR' | 'NOT'
+		| 'INPUT' 
+		| 'PRINT'
+		| CP 
+		| INC
+		| DEC
 
-Expr = Ident | Constant | Register
+Expr = Ident | Constant
 Constant = Char | Integer
 SegmentTerminator = 'END SEGMENT\n'
 Type = 'BYTE' | 'WORD' | 'DWORD'
