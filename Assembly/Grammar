@@ -10,22 +10,21 @@ Label = Ident ':'
 FunctionCall = 'CALL' Ident
 PushCommand = 'PUSH' Expr
 PopCommand = 'POP' | 'POP' IDENT
-RetExpr = 'RET' {Expr}
+RetExpr = 'RET' | 'RET' Expr {, Expr}
 BuildinCommand = 'ADD' | 'SUB' | 'MUL' | 'DIV'
-		| 'STOR'
 		| 'JMP' Ident | 'JMPZ' Ident
-		| 'CMP'
+		| 'CMP' | 'CMPG' | 'CMPNE' | 'CMPGE' | 'CMPL' | 'CMPLE'
 		| 'AND' | 'OR' | 'XOR' | 'NOT'
 		| 'INPUT' 
 		| 'PRINT'
-		| CP 
-		| INC
-		| DEC
+		| 'INC'
+		| 'DEC'
+		| 'CP' | 'CP' Ident | 'CP' Constant
 
 Expr = Ident | Constant
 Constant = Char | Integer
 SegmentTerminator = 'END SEGMENT\n'
-Type = 'BYTE' | 'WORD' | 'DWORD'
+Type = 'BYTE'
 
 
 # Regex expressions for terminal symbols
